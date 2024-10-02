@@ -2,13 +2,26 @@
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
-// Todo: create a function to generate a unique task id
-function generateTaskId() {
-    const uniqueId = Date.now().toString();
-    console.log("stringId = "+uniqueId);
+// Assign references to important DOM elements
+const taskId = document.querySelector("#task-id");
+const taskTitle = document.querySelector("#taskTitle");
+const taskDueDate = document.querySelector("#taskDueDate");
+const taskDescription = document.querySelector("#taskDescription");
+const taskStatus = document.querySelector("#taskStatus");
 
+// Todo: create a function to generate a unique task id
+// Use Date.now to use for unique task id
+function generateTaskId() {
+    // grabs unix time to use as unique ID
+    uniqueId = dayjs();
+    console.log("using dayjs uniqueId = "+uniqueId);
+    // converts unix time to local timestamp (only down to seconds)
+    const altUniqueId = Date(uniqueId.toString());
+    console.log("using Date = "+altUniqueId);
+    // could also use (this is without using dayjs):  const dayUniqueId = Date(Date.now()).toString();
 }
 generateTaskId()
+
 // Todo: create a function to create a task card
 function createTaskCard(task) {
 
