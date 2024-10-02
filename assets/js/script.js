@@ -4,33 +4,42 @@ let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Assign references to important DOM elements
-const taskId = $('#task-id');
-const taskTitle = $('#taskTitle');
-const taskDueDate = $('#taskDueDate');
-const taskDescription = $('#taskDescription');
-const taskStatus = $('#taskStatus');
+const taskIdEl = $('#task-id');
+const taskTitleEl = $('#taskTitle');
+// need day/month/year only
+const taskDueDateEl = $('#taskDueDate');
+const taskDescriptionEl = $('#taskDescription');
+const taskStatusEl = $('#taskStatus');
 
 
 // Todo: create a function to generate a unique task id
 // Use Date.now to use for unique task id
 function generateTaskIdNumber() {
     // grabs unix time to use as unique ID
-    const taskUniqueIdNumber = dayjs();
-    console.log("using dayjs uniqueId = "+taskUniqueId);
+    const taskIdNumberInside = dayjs();
+    console.log("using dayjs unique ID = " + taskIdNumberInside);
+    taskIdEl.text(taskIdNumberInside);
+}
+    //  Use the task ID (which is unix time) to convert to timestamp (only down to seconds)
 
 
-    // converts unix time to local timestamp (only down to seconds)
-    // const unixDateTime = Date(taskUniqueId.toString());
-    // console.log("using Date = "+unixDateTime);
-    // could also use (this is without using dayjs):  const dayUniqueId = Date(Date.now()).toString();
+// pull tasks from local storage and provide fall though if no tasks present
+function getTasksFromStorage () {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
 
-    return taskUniqueIdNumber;
+    // if no tasks exist in local storage set the array to empty waiting on user
+    // to provide new task which will be loaded into local storage.
+    if (!tasks) {
+        tasks = [];
+    }
+    return tasks;
 }
 
+
 // when 'add task' button is pushed, need to execute this.
-generateTaskId()
-console.log(taskUniqueId);
-const [taskUniqueId, unixDateTime] = generateTaskId
+generateTaskIdNumber(taskIdNumberOutside());
+const taskIdNumberOutside = taskIdEl.text;
+console.log("after task ID creation = ", val(taskIdNumberOutside);
 
 
 // Todo: create a function to create a task card
@@ -59,7 +68,7 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
-    localStorage.setItem('projects', JSON.stringify(projects));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // Todo: create a function to handle deleting a task
