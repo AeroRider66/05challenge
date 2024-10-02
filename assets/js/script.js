@@ -4,11 +4,11 @@ let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Assign references to important DOM elements
-const taskId = document.querySelector("#task-id");
-const taskTitle = document.querySelector("#taskTitle");
-const taskDueDate = document.querySelector("#taskDueDate");
-const taskDescription = document.querySelector("#taskDescription");
-const taskStatus = document.querySelector("#taskStatus");
+const taskId = $('#task-id');
+const taskTitle = $('#taskTitle');
+const taskDueDate = $('#taskDueDate');
+const taskDescription = $('#taskDescription');
+const taskStatus = $('#taskStatus');
 
 
 // Todo: create a function to generate a unique task id
