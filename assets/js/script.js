@@ -13,18 +13,23 @@ const taskStatus = document.querySelector("#taskStatus");
 // Use Date.now to use for unique task id
 function generateTaskId() {
     // grabs unix time to use as unique ID
-    uniqueId = dayjs();
-    console.log("using dayjs uniqueId = "+uniqueId);
+    uniqueTaskId = dayjs();
+    console.log("using dayjs uniqueId = "+uniqueTaskId);
     // converts unix time to local timestamp (only down to seconds)
-    const altUniqueId = Date(uniqueId.toString());
-    console.log("using Date = "+altUniqueId);
+    const unixDateTime = Date(uniqueTaskId.toString());
+    console.log("using Date = "+unixDateTime);
     // could also use (this is without using dayjs):  const dayUniqueId = Date(Date.now()).toString();
+
+    return uniqueTaskId,
 }
 generateTaskId()
 
 // Todo: create a function to create a task card
+// use div id="todo-cards" or "in-progress-cards" or "done-cards" to define which column
+//
 function createTaskCard(task) {
-
+    let taskId = document.createElement("div");
+    let taskTitle = document.createElement("div");
 }
 
 // Todo: create a function to render the task list and make cards draggable
