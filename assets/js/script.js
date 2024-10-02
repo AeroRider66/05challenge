@@ -13,9 +13,9 @@ const taskStatus = $('#taskStatus');
 
 // Todo: create a function to generate a unique task id
 // Use Date.now to use for unique task id
-function generateTaskId() {
+function generateTaskIdNumber() {
     // grabs unix time to use as unique ID
-    const taskUniqueId = dayjs();
+    const taskUniqueIdNumber = dayjs();
     console.log("using dayjs uniqueId = "+taskUniqueId);
 
 
@@ -24,7 +24,7 @@ function generateTaskId() {
     // console.log("using Date = "+unixDateTime);
     // could also use (this is without using dayjs):  const dayUniqueId = Date(Date.now()).toString();
 
-    return [taskUniqueId, unixDateTime];
+    return taskUniqueIdNumber;
 }
 
 // when 'add task' button is pushed, need to execute this.
