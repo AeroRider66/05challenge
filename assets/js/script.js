@@ -10,13 +10,6 @@ const taskDueDate = document.querySelector("#taskDueDate");
 const taskDescription = document.querySelector("#taskDescription");
 const taskStatus = document.querySelector("#taskStatus");
 
-let taskObject = {
-    taskId: uniqueIdTask,
-    taskTitle: titleTask,
-    taskDueDate: taskDueDate,
-    taskDescription: taskDescription,
-    taskStatus: taskStatus
-}
 
 // Todo: create a function to generate a unique task id
 // Use Date.now to use for unique task id
@@ -24,9 +17,11 @@ function generateTaskId() {
     // grabs unix time to use as unique ID
     const taskUniqueId = dayjs();
     console.log("using dayjs uniqueId = "+taskUniqueId);
+
+
     // converts unix time to local timestamp (only down to seconds)
-    const unixDateTime = Date(taskUniqueId.toString());
-    console.log("using Date = "+unixDateTime);
+    // const unixDateTime = Date(taskUniqueId.toString());
+    // console.log("using Date = "+unixDateTime);
     // could also use (this is without using dayjs):  const dayUniqueId = Date(Date.now()).toString();
 
     return [taskUniqueId, unixDateTime];
@@ -42,25 +37,19 @@ const [taskUniqueId, unixDateTime] = generateTaskId
 // use div id="todo-cards" or "in-progress-cards" or "done-cards" to define which column
 //
 function createTaskCard(task) {
-
-    const putCardTogether =
-    let taskId = document.createElement("div");
-    let taskTitle = document.createElement("div");
-
-    function createTaskElement(taskId, taskTitle, taskDueDate, taskDescription, taskStatus) {
-        const taskId = id
-        const task = document.createElement("div");
-        task.id = taskId;
-        task.classTaskName = "task";
-        task.draggableTast = true;
-        task.innerHTML =
-            `${content}
-    <span class="delete-btn" 
-        onclick="deleteTask('${taskId}')">
-    </span>`;
-        task.addEventListener("dragstart", drag);
-        return task;
-    }
+    // create a card and use the
+    const cardId = $('<div>')
+        .addClass('card project-card draggable my-3')
+        .attr('data-project-id', project.id);
+    const cardTaskId = $('<div>').addClass('card-header h4').text(project.name);
+    const cardBody = $('<div>').addClass('card-body');
+    const cardTitle = $('<p>').addClass('card-text').text(project.type);
+    const cardDueDate = $('<p>').addClass('card-text').text(project.dueDate);
+    const cardDeleteBtn = $('<button>')
+        .addClass('btn btn-danger delete')
+        .text('Delete')
+        .attr('data-project-id', project.id);
+    cardDeleteBtn.on('click', handleDeleteProject);
 }
 
 // Todo: create a function to render the task list and make cards draggable
