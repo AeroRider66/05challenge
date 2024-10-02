@@ -70,7 +70,7 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
-
+    localStorage.setItem('projects', JSON.stringify(projects));
 }
 
 // Todo: create a function to handle deleting a task
