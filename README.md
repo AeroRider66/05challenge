@@ -1,22 +1,17 @@
 # Challenge 05 Third-party APIs
 
 ## Startup
-Access web page via URL https://aerorider66.github.io/06challenge/
+Access web page via URL https://aerorider66.github.io/05challenge/
 
 ## Use and Function
-This app is designed to provide a 5-day weather forecast for the city of their choice. Once the desired city is input, the app will present the weather type, temperature, humidity, and wind=speed.
+This app is designed to provide a Kanban-style task board.  It provides the user with the capability to create a task and see it on a board that allows for the task to moved between 3 areas - To Do, In Progress, and Done.  It will allow the user to input the title, task description, and task due date for each task.
 
 ## User Interface
-Upon access the user will be provided a page divided into 2 sides.  There will be an input box and a 'Submit' button on the left side.  Upon first visit, the right side will contain no information.
-When the user provides a city in the box, and presses the 'Submit' button, a new button will be created directly under the city input box.  This new button will contain the name of the city that was input.
-The right side of the page will update and display the weather forecast for the next 5 days for the input city.
-The user may enter another city to search in the input field, and the 5-day forecast will update with the new city.  
-Additionally, for each city searched, a new button will be added below the input box as it was with the first one.  Clicking one of the those buttons will repopulate the weather for that city, updated at the time of the button push.
-
+Upon access the user will be provided a page divided into 3 columns, and a button that says 'Add task'.  Once tasks are added to the board, upon load the user will be presented with tasks previously entered.  When the 'Add Task' button is pushed, the user will have a pop-up input box with 3 fields, 'Task Title', 'Due Date' and Task 'Description'.  The 'Due Date' input will contain a calendar modal for ease of date input.  When input is complete, the user will press the button, and the task will be saved and display as a card on the board.  User will be able to move card between columns.  Card color will changed based on amount of time left on task.
 
 ## Application Internal Operations
 
-The operation of the code in the app, is centric around only 2 provided parameters, and a single API key URL.
+The operation of the code in the app, is centric around only 3 provided parameters, and a single API key URL.
 The 2 parameters are the city name provided by the user, and a weather 'container'.
 The operation is centric around the input city (user input), the API response from https://openweathermap.org, and the parsing of the information provided by this app.
 
@@ -33,10 +28,10 @@ Once selected the datasets are passed to the renderWeatherItem function, which w
 ## Repository and Site
 
 ### URL
-Web page hosted by Github via URL https://aerorider66.github.io/06challenge/
+Web page hosted by Github via URL https://aerorider66.github.io/05challenge/
 
 ### Repository
-Repository location is https://github.com/AeroRider66/06challenge
+Repository location is https://github.com/AeroRider66/05challenge
 
    
 

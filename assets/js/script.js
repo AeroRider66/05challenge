@@ -57,6 +57,16 @@ function createTaskCard(task) {
 
     cardDeleteBtn.on('click', handleDeleteTask);
 
+// Compare current date to task due date
+    const currentDate = new Date();
+    const dueDate = new Date(taskDueDateEl.val());
+
+// Check if the current date is past the due date
+    if (currentDate > dueDate) {
+        console.log("The current date is past the due date.");
+    } else {
+        console.log("The due date has not passed yet.");
+    }
     cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
     card.append(cardHeader, cardBody);
 
@@ -106,12 +116,10 @@ function renderTaskList() {
     });
 }
 
-
-// Todo: create a function to handle adding a new task
+// Adds new task, provides a unique ID, reads current localStorage tasks, adds the new task on, and saves the entire set of tasks back into localStorage.
 function handleAddTask(event){
     console.log('adding task');
 // when 'add task' button is pushed, need to execute this.
-
 
 // Create an object representing the new task
     const newTask = {
@@ -122,7 +130,7 @@ function handleAddTask(event){
         status: "todo"
     };
     console.log(newTask);
-// Retrieve existing tasks from localStorage and add the new task
+// Get existing tasks from localStorage and add  new task
     let tasks = getTasksFromStorage();
     tasks.push(newTask);
 
@@ -134,17 +142,31 @@ function handleAddTask(event){
     taskDueDateEl.val('');
     taskDescriptionEl.val('');
 
-// Optionally, close the modal (assuming a modal with id 'taskModal')
+// Optionally, close the modal (assuming a modal with id 'formModal')
     $('#formModal').modal('hide');
 
 // Re-render the task list to include the new task
     renderTaskList();
-
 }
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
 
+}
+
+// Todo: create a function to handle deleting a task
+function handleDeleteTask(event) {
+    const taskId = $(event.target).data('task-id');
+
+    // Retrieve existing tasks and filter for task to delete
+    let tasks = getTasksFromStorage();
+    tasks = tasks.filter(task => task.id !== taskId);
+
+    // Save the updated tasks list to localStorage
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    // Re-render the task list to update the UI
+    renderTaskList();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
@@ -158,35 +180,3 @@ $(document).ready(function () {
 });
 
 
-
-// // Retrieve tasks and nextId from localStorage
-// let taskList = JSON.parse(localStorage.getItem("tasks"));
-// let nextId = JSON.parse(localStorage.getItem("nextId"));
-//
-// // Assign references to important DOM elements
-// const taskId = document.querySelector("#task-id");
-// const taskTitle = document.querySelector("#taskTitle");
-// const taskDueDate = document.querySelector("#taskDueDate");
-// const taskDescription = document.querySelector("#taskDescription");
-// const taskStatus = document.querySelector("#taskStatus");
-//
-//
-//
-// // Todo: create a function to generate a unique task id
-// // Use Date.now to use for unique task id
-// function generateTaskId() {
-//     // grabs unix time to use as unique ID
-//     uniqueTaskId = dayjs();
-//     console.log("using dayjs uniqueId = "+uniqueTaskId);
-//     // converts unix time to local timestamp (only down to seconds)
-//     const unixDateTime = Date(uniqueTaskId.toString());
-//     console.log("using Date = "+unixDateTime);
-//     // could also use (this is without using dayjs):  const dayUniqueId = Date(Date.now()).toString();
-//
-//     return uniqueTaskId,
-// }
-//
-// // when 'add task' button is pushed, need to execute this.
-// generateTaskId();
-// console.log(uniqueTaskId);
-//
