@@ -1,25 +1,26 @@
-
 // Retrieve tasks and nextId from localStorage
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Assign references to important DOM elements
-const taskIdEl = $('#task-id');
+
 const taskTitleEl = $('#taskTitle');
 // need day/month/year only
 const taskDueDateEl = $('#taskDueDate');
 const taskDescriptionEl = $('#taskDescription');
-const taskStatusEl = $('#taskStatus');
 
-
+$('#btnAddTask').on('click', handleAddTask);
+renderTaskList();
 // Todo: create a function to generate a unique task id
 // Use Date.now to use for unique task id
+
+
+
 function generateTaskIdNumber() {
-    // grabs unix time to use as unique ID
-    const taskIdNumberInside = dayjs();
-    console.log("using dayjs unique ID = " + taskIdNumberInside);
-    taskIdEl.text(taskIdNumberInside);
+    // generate a UUID
+    return uuidv4();
 }
+
     //  Use the task ID (which is unix time) to convert to timestamp (only down to seconds)
 
 
@@ -36,39 +37,109 @@ function getTasksFromStorage () {
 }
 
 
-// when 'add task' button is pushed, need to execute this.
-generateTaskIdNumber(taskIdNumberOutside());
-const taskIdNumberOutside = taskIdEl.text;
-console.log("after task ID creation = ", val(taskIdNumberOutside);
-
-
 // Todo: create a function to create a task card
 // use div id="todo-cards" or "in-progress-cards" or "done-cards" to define which column
 //
+
 function createTaskCard(task) {
-    // create a card and use the
-    const cardId = $('<div>')
+    const card = $('<div>')
         .addClass('card project-card draggable my-3')
-        .attr('data-project-id', project.id);
-    const cardTaskId = $('<div>').addClass('card-header h4').text(project.name);
+        .attr('data-task-id', task.id);
+
+    const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
     const cardBody = $('<div>').addClass('card-body');
-    const cardTitle = $('<p>').addClass('card-text').text(project.type);
-    const cardDueDate = $('<p>').addClass('card-text').text(project.dueDate);
+    const cardDescription = $('<p>').addClass('card-text').text(task.description);
+    const cardDueDate = $('<p>').addClass('card-text').text(`Due Date: ${task.dueDate}`);
     const cardDeleteBtn = $('<button>')
         .addClass('btn btn-danger delete')
         .text('Delete')
-        .attr('data-project-id', project.id);
-    cardDeleteBtn.on('click', handleDeleteProject);
+        .attr('data-task-id', task.id);
+
+    cardDeleteBtn.on('click', handleDeleteTask);
+
+    cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+    card.append(cardHeader, cardBody);
+
+    return card;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+    // Clear existing tasks in the board
+    $('#todo-cards, #in-progress-cards, #done-cards').empty();
 
+    // Retrieve tasks from local storage
+    let tasks = getTasksFromStorage();
+
+    tasks.forEach(task => {
+        let taskCard = createTaskCard(task);
+
+        // Append task card to the appropriate column
+        switch (task.status) {
+            case 'todo':
+                $('#todo-cards').append(taskCard);
+                break;
+            case 'in-progress':
+                $('#in-progress-cards').append(taskCard);
+                break;
+            case 'done':
+                $('#done-cards').append(taskCard);
+                break;
+        }
+    });
+
+    // Make the cards draggable
+    $('.draggable').draggable({
+        revert: 'invalid',
+        start: function (event, ui) {
+            $(this).css('z-index', 100);
+        },
+        stop: function (event, ui) {
+            $(this).css('z-index', '');
+        }
+    });
+
+    // Make task lanes droppable
+    $('#todo-cards, #in-progress-cards, #done-cards').droppable({
+        accept: '.draggable',
+        drop: handleDrop
+    });
 }
+
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
+    console.log('adding task');
+// when 'add task' button is pushed, need to execute this.
+
+
+// Create an object representing the new task
+    const newTask = {
+        id: generateTaskIdNumber(),
+        title: taskTitleEl.val(),
+        dueDate: taskDueDateEl.val(),
+        description: taskDescriptionEl.val(),
+        status: "todo"
+    };
+    console.log(newTask);
+// Retrieve existing tasks from localStorage and add the new task
+    let tasks = getTasksFromStorage();
+    tasks.push(newTask);
+
+// Save the updated tasks list to localStorage
     localStorage.setItem('tasks', JSON.stringify(tasks));
+
+// Clear the form inputs
+    taskTitleEl.val('');
+    taskDueDateEl.val('');
+    taskDescriptionEl.val('');
+
+// Optionally, close the modal (assuming a modal with id 'taskModal')
+    $('#formModal').modal('hide');
+
+// Re-render the task list to include the new task
+    renderTaskList();
+
 }
 
 // Todo: create a function to handle deleting a task
